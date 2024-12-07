@@ -30,38 +30,23 @@ struct gpioled_dev {
     int minor;
     struct device_node *node;
     int led_gpio; /* led所使用的GPIO编号		*/
-//    atomic_t lock;  //原子
-    int dev_status;       /*0表示设备可以被使用,大于1表示不可被使用*/
-    spinlock_t lock;    //自旋锁
+    struct semaphore sem;   //信号量
 };
 struct gpioled_dev gpioled;
 
 static int gpioled_open(struct inode *inode, struct file *file) {
-    unsigned long irqflag;
-    file->private_data = &gpioled; /* 设置私有数据 */
-//    spin_lock(&gpioled.lock);
-    spin_lock_irqsave(&gpioled.lock,irqflag);
-    if (gpioled.dev_status) { //驱动不能被使用
-        spin_unlock(&gpioled.dev_status);
-        return -EBUSY;
-    }
 
-    gpioled.dev_status++;   /*标记被使用*/
-//    spin_unlock(&gpioled.lock);
-    spin_unlock_irqrestore(&gpioled.lock, irqflag);
+    file->private_data = &gpioled; /* 设置私有数据 */
+    down(&gpioled.sem); /*获取信号量*/
+
+
     return 0;
 }
 
 static int gpioled_release(struct inode *inode, struct file *file) {
-    unsigned long irqflag;
+
     struct gpioled_dev *dev = file->private_data;
-//    spin_lock(&dev->lock);
-    spin_lock_irqsave(&gpioled.lock,irqflag);
-    if (&dev->dev_status) {
-        dev->dev_status--;      /*标记驱动是可以使用的*/
-    }
-    spin_unlock_irqrestore(&gpioled.lock, irqflag);
-//    spin_unlock(&dev->lock);
+    up(&gpioled.sem);               /*释放信号量*/
     return 0;
 }
 
@@ -93,9 +78,8 @@ static const struct file_operations gpioled_fops = {
 
 static int __init gpio_init(void) {
     int ret = 0;
-    /*初始化自旋锁*/
-    spin_lock_init(&gpioled.lock);
-    gpioled.dev_status = 0;
+    /*初始化信号量*/
+    sema_init(&gpioled.sem,1);
     /*注册字符设备驱动*/
     gpioled.major = 0;
     if (gpioled.major) {
