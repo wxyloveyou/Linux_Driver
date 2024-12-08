@@ -30,14 +30,14 @@ struct gpioled_dev {
     int minor;
     struct device_node *node;
     int led_gpio; /* led所使用的GPIO编号		*/
-    struct semaphore sem;   //信号量
+    struct mutex lock;      //互斥体
 };
 struct gpioled_dev gpioled;
 
 static int gpioled_open(struct inode *inode, struct file *file) {
 
     file->private_data = &gpioled; /* 设置私有数据 */
-    down(&gpioled.sem); /*获取信号量*/
+    mutex_lock(&gpioled.lock); /*获取互斥体*/
 
 
     return 0;
@@ -46,7 +46,7 @@ static int gpioled_open(struct inode *inode, struct file *file) {
 static int gpioled_release(struct inode *inode, struct file *file) {
 
     struct gpioled_dev *dev = file->private_data;
-    up(&gpioled.sem);               /*释放信号量*/
+    mutex_unlock(&gpioled.lock);               /*释放互斥体*/
     return 0;
 }
 
@@ -78,8 +78,8 @@ static const struct file_operations gpioled_fops = {
 
 static int __init gpio_init(void) {
     int ret = 0;
-    /*初始化信号量*/
-    sema_init(&gpioled.sem,1);
+    /*初始化互斥体*/
+    mutex_init(&gpioled.lock);
     /*注册字符设备驱动*/
     gpioled.major = 0;
     if (gpioled.major) {

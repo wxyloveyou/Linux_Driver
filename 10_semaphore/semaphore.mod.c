@@ -32,14 +32,15 @@ __attribute__((section("__versions"))) = {
 	{ 0xfeb25d8b, __VMLINUX_SYMBOL_STR(cdev_add) },
 	{ 0xb6828306, __VMLINUX_SYMBOL_STR(cdev_init) },
 	{ 0x29537c9e, __VMLINUX_SYMBOL_STR(alloc_chrdev_region) },
+	{ 0xf3bb59b5, __VMLINUX_SYMBOL_STR(__mutex_init) },
 	{ 0xfa2a45e, __VMLINUX_SYMBOL_STR(__memzero) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
 	{ 0xfbc74f64, __VMLINUX_SYMBOL_STR(__copy_from_user) },
 	{ 0x389329b3, __VMLINUX_SYMBOL_STR(gpiod_set_raw_value) },
 	{ 0x3089e8ae, __VMLINUX_SYMBOL_STR(gpio_to_desc) },
-	{ 0xf473ffaf, __VMLINUX_SYMBOL_STR(down) },
+	{ 0x7267eeee, __VMLINUX_SYMBOL_STR(mutex_lock) },
 	{ 0xefd6cf06, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr0) },
-	{ 0x4be7fb63, __VMLINUX_SYMBOL_STR(up) },
+	{ 0x49fcab7e, __VMLINUX_SYMBOL_STR(mutex_unlock) },
 };
 
 static const char __module_depends[]
@@ -48,4 +49,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "875964C1DCC991A719E6E86");
+MODULE_INFO(srcversion, "5760B6B45EFB141E5B9FFF4");
