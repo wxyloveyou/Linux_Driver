@@ -1,7 +1,7 @@
 KERNELDIR := /home/wxy/linux/IMX6ULL/linux/linux-imx-rel_imx_4.1.15_2.1.0_ga
 			
 CURRENT_PATH := $(shell pwd)
-obj-m := key.o
+obj-m := timer.o
 
 all:build
 build: kernel_modules

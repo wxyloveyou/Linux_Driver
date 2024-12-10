@@ -1,11 +1,11 @@
 [
  {
-  "directory": "/home/wxy/linux/IMX6ULL/Linux_Drivers/11_key", 
+  "directory": "/home/wxy/linux/IMX6ULL/Linux_Drivers/13_timer", 
   "arguments": [
    "arm-linux-gnueabihf-gcc", 
    "-E", 
    "-D__GENKSYMS__", 
-   "-Wp,-MD,/home/wxy/linux/IMX6ULL/Linux_Drivers/11_key/.key.o.d", 
+   "-Wp,-MD,/home/wxy/linux/IMX6ULL/Linux_Drivers/13_timer/.timer.o.d", 
    "-nostdinc", 
    "-isystem", 
    "/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/4.9.4/include", 
@@ -60,10 +60,10 @@
    "-DCC_HAVE_ASM_GOTO", 
    "-DMODULE", 
    "-DKBUILD_STR(s)=#s", 
-   "-DKBUILD_BASENAME=KBUILD_STR(key)", 
-   "-DKBUILD_MODNAME=KBUILD_STR(key)", 
-   "/home/wxy/linux/IMX6ULL/Linux_Drivers/11_key/key.c"
+   "-DKBUILD_BASENAME=KBUILD_STR(timer)", 
+   "-DKBUILD_MODNAME=KBUILD_STR(timer)", 
+   "/home/wxy/linux/IMX6ULL/Linux_Drivers/13_timer/timer.c"
   ], 
-  "file": "/home/wxy/linux/IMX6ULL/Linux_Drivers/11_key/key.c"
+  "file": "/home/wxy/linux/IMX6ULL/Linux_Drivers/13_timer/timer.c"
  }
 ]
