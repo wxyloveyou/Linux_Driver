@@ -26,9 +26,8 @@ __attribute__((section("__versions"))) = {
 	{ 0x495be299, __VMLINUX_SYMBOL_STR(class_destroy) },
 	{ 0xfe990052, __VMLINUX_SYMBOL_STR(gpio_free) },
 	{ 0xfa2bcf10, __VMLINUX_SYMBOL_STR(init_timer_key) },
-	{ 0x9545af6d, __VMLINUX_SYMBOL_STR(tasklet_init) },
 	{ 0xd6b8e852, __VMLINUX_SYMBOL_STR(request_threaded_irq) },
-	{ 0x94616f8b, __VMLINUX_SYMBOL_STR(gpiod_to_irq) },
+	{ 0x69fa1227, __VMLINUX_SYMBOL_STR(irq_of_parse_and_map) },
 	{ 0xb7cfa4a8, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },
 	{ 0x47229b5c, __VMLINUX_SYMBOL_STR(gpio_request) },
 	{ 0x91715312, __VMLINUX_SYMBOL_STR(sprintf) },
@@ -40,8 +39,8 @@ __attribute__((section("__versions"))) = {
 	{ 0xfeb25d8b, __VMLINUX_SYMBOL_STR(cdev_add) },
 	{ 0xb6828306, __VMLINUX_SYMBOL_STR(cdev_init) },
 	{ 0x29537c9e, __VMLINUX_SYMBOL_STR(alloc_chrdev_region) },
-	{ 0xfaef0ed, __VMLINUX_SYMBOL_STR(__tasklet_schedule) },
-	{ 0xca54fee, __VMLINUX_SYMBOL_STR(_test_and_set_bit) },
+	{ 0x2d3385d3, __VMLINUX_SYMBOL_STR(system_wq) },
+	{ 0xb2d48a2e, __VMLINUX_SYMBOL_STR(queue_work_on) },
 	{ 0x7d11c268, __VMLINUX_SYMBOL_STR(jiffies) },
 	{ 0xc8fd727e, __VMLINUX_SYMBOL_STR(mod_timer) },
 	{ 0x3bd1b1f6, __VMLINUX_SYMBOL_STR(msecs_to_jiffies) },
@@ -58,4 +57,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "4755CD2ADDC54F1DD2A1D58");
+MODULE_INFO(srcversion, "78841CB734B3DFC92116DBC");

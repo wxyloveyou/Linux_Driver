@@ -50,6 +50,7 @@ struct imx6uirq_dev
 
     atomic_t keyvalue;
     atomic_t releasekey;
+    struct work_struct work;
 };
 struct imx6uirq_dev imx6uirqdev;
 
@@ -101,7 +102,7 @@ static const struct file_operations imx6uirq_fops = {
     .open = imx6uirq_open,
     .read = imx6uirq_read,
     .release = imx6uirq_release};
-
+/*定时器处理函数*/
 /**
  * timer_fun - 定时器中断服务例程
  * @arg: 传递给定时器例程的参数，这里预期是一个设备结构体的地址
@@ -141,18 +142,40 @@ static irqreturn_t key0_handler(int irq, void *dev_id)
 {
 
     struct imx6uirq_dev *dev = dev_id;
-    printk("key0_handler is runing\r\n");
-    tasklet_schedule(&dev->irqkey[0].tasklet);
+
+    // tasklet_schedule(&dev->irqkey[0].tasklet);
+    schedule_work(&dev->work);
     return IRQ_HANDLED;
 }
-static void key_tasklet(unsigned long data)
+static void key_tasklet_handler(unsigned long data)
 {
-    struct imx6uirq_dev *dev = (struct imx6uirq_dev*)data;
-    printk("key_tasklet is runing\r\n");
+    struct imx6uirq_dev *dev = (struct imx6uirq_dev *)data;
+    printk("key0_tasklet_handler\n");
     dev->timer.data = data;
-    mod_timer(&dev->timer, jiffies + msecs_to_jiffies(10));     /*10ms定时*/
+    mod_timer(&dev->timer, jiffies + msecs_to_jiffies(10)); /*10ms定时*/
 }
-
+/**
+ * key_work_handler - 延迟处理按键工作中断请求的函数
+ * @work: 工作队列项的指针，用于调度延时处理任务
+ * 
+ * 此函数被工作队列调度执行，主要用于处理按键中断请求。
+ * 它通过获取设备结构体的指针来安排一个定时器，该定时器将在未来触发，
+ * 以此来实现按键去抖动的功能，确保按键状态稳定后再进行处理。
+ */
+static void key_work_handler(struct work_struct *work)
+{
+    // 打印工作处理函数运行信息
+    printk("key_work_handler is runing \r\n");
+    
+    // 通过work反向获取包含它的设备结构体指针,三个参数分别是指针,类型,成员名
+    struct imx6uirq_dev *dev = container_of(work, struct imx6uirq_dev, work);
+    
+    // 设置定时器的数据为设备结构体的首地址，用于定时器回调函数获取设备信息
+    dev->timer.data = (unsigned long)dev; // timer.data 为imx6ulirq这个结构体变量的首地址
+    
+    // 修改定时器的到期时间，使其在当前时间点之后的10ms触发
+    mod_timer(&dev->timer, jiffies + msecs_to_jiffies(10)); /*10ms定时*/
+}
 /*按键初始化*/
 static int keyio_init(struct imx6uirq_dev *dev)
 {
@@ -175,16 +198,15 @@ static int keyio_init(struct imx6uirq_dev *dev)
         sprintf(dev->irqkey[i].name, "KEY%d", i);
         gpio_request(dev->irqkey[i].gpio, dev->irqkey[i].name);
         gpio_direction_input(dev->irqkey[i].gpio);
-
-        dev->irqkey[i].irqnum = gpio_to_irq(dev->irqkey[i].gpio); /*获取中断号*/
 #if 0
-        dev->irqkey[i].irqnum = irq_of_parse_and_map(dev->node, i);
+        dev->irqkey[i].irqnum = gpio_to_irq(dev->irqkey[i].gpio);       /*获取中断号*/;
 #endif
+
+        dev->irqkey[i].irqnum = irq_of_parse_and_map(dev->node, i);
     }
     /*2、按键中断初始化*/
     dev->irqkey[0].handler = key0_handler;
     dev->irqkey[0].value = KEY0VALUE;
-    // dev->irqkey[0].tasklet = key_tasklet;
     for (i = 0; i < KEY_NUM; ++i)
     {
         ret = request_irq(dev->irqkey[i].irqnum, dev->irqkey[i].handler, IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING,
@@ -194,9 +216,10 @@ static int keyio_init(struct imx6uirq_dev *dev)
             printk("irq %d request fail...\r\n", dev->irqkey[i].irqnum);
             goto fail_requset;
         }
-        tasklet_init(&dev->irqkey[i].tasklet, key_tasklet, (unsigned long)dev);
-    }
 
+        // tasklet_init(&dev->irqkey[i].tasklet, key_tasklet_handler, (unsigned long)dev);
+    }
+    INIT_WORK(&dev->work, key_work_handler);
     /*3、初始化定时器*/
     init_timer(&dev->timer);
     dev->timer.function = timer_fun;
@@ -251,7 +274,6 @@ static int __init imx6uirq_init(void)
         goto fail_device;
     }
     /*初始化keyIO*/
-    
     ret = keyio_init(&imx6uirqdev);
     if (ret < 0)
     {

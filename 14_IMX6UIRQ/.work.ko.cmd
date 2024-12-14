@@ -1,0 +1,1 @@
+cmd_/home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/work.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/work.ko /home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/work.o /home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/work.mod.o
