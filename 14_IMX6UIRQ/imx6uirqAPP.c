@@ -9,8 +9,8 @@
 /*
 *argc :应用程序参数
 *argv[] :具体的参数内容,字符串形似
-  ./TimerPP <filename>
- ./timerAPP /dev/tiemr 0 表示关灯
+  ./imx6uirqAPP <filename>
+ ./imx6uirqAPP /dev/imx6uirq 0 表示关灯
 
 */
 #define KEY0VALUE		0XF0	/* 按键值 		*/
@@ -25,10 +25,9 @@ int main(int argc,char *argv[])
 
     int fd, ret;
     char *filename;
-    unsigned int cmd;
-    unsigned int arg;
+    unsigned char data;
     filename = argv[1];
-    unsigned char str[100];
+
     if(argc != 2){
         printf("ERROR usage!\r\n");
         return -1;
@@ -46,25 +45,14 @@ int main(int argc,char *argv[])
 
 
     while(1){
-        printf("input CMD : ");
-        ret = scanf("%d", &cmd);
-        if (ret != 1) {
-            gets(str); //防止卡死
-        }
-        if (cmd == 1) {         //关闭
-            cmd = CLOSE_CMD;
+        ret = read(fd, &data, sizeof(data));
+        if (ret < 0) {
 
-        } else if (cmd == 2) {          //打开
-            cmd = OPEN_CMD;
-        } else if (cmd == 3) {          //设置周期
-            cmd = SETPERIOD_CMD;
-            printf("INPUT Timer Period : ");
-            ret = scanf("%d", &arg);
-            if (ret != 1) {			/* 参数输入错误 */
-                gets(str);			/* 防止卡死 */
+        }else {
+            if (data) {
+                printf("key value is %#x\r\n", data);
             }
         }
-        ioctl(fd, cmd, arg);
     }
     close(fd);
 

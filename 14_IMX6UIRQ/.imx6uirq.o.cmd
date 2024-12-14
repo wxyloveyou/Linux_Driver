@@ -864,7 +864,12 @@ deps_/home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/imx6uirq.o := \
     $(wildcard include/config/have/mod/arch/specific.h) \
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
-  include/linux/cdev.h \
+  include/linux/gpio.h \
+    $(wildcard include/config/gpiolib.h) \
+    $(wildcard include/config/arch/have/custom/gpio/h.h) \
+  arch/arm/include/asm/gpio.h \
+    $(wildcard include/config/arch/nr/gpio.h) \
+  include/asm-generic/gpio.h \
   include/linux/of.h \
     $(wildcard include/config/sparc.h) \
     $(wildcard include/config/of/dynamic.h) \
@@ -880,12 +885,6 @@ deps_/home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/imx6uirq.o := \
     $(wildcard include/config/of/overlay.h) \
   include/linux/property.h \
   include/linux/fwnode.h \
-  include/linux/gpio.h \
-    $(wildcard include/config/gpiolib.h) \
-    $(wildcard include/config/arch/have/custom/gpio/h.h) \
-  arch/arm/include/asm/gpio.h \
-    $(wildcard include/config/arch/nr/gpio.h) \
-  include/asm-generic/gpio.h \
   include/linux/gpio/driver.h \
     $(wildcard include/config/gpiolib/irqchip.h) \
     $(wildcard include/config/of/gpio.h) \
@@ -909,7 +908,16 @@ deps_/home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/imx6uirq.o := \
     $(wildcard include/config/generic/pinconf.h) \
   include/linux/gpio/consumer.h \
     $(wildcard include/config/gpio/sysfs.h) \
+  include/linux/cdev.h \
+  include/linux/of_address.h \
+    $(wildcard include/config/of/address.h) \
   include/linux/of_gpio.h \
+  include/linux/of_irq.h \
+    $(wildcard include/config/ppc32.h) \
+    $(wildcard include/config/ppc/pmac.h) \
+    $(wildcard include/config/of/irq.h) \
+  arch/arm/include/asm/mach/map.h \
+    $(wildcard include/config/debug/ll.h) \
 
 /home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/imx6uirq.o: $(deps_/home/wxy/linux/IMX6ULL/Linux_Drivers/14_IMX6UIRQ/imx6uirq.o)
 
