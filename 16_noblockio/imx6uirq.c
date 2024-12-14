@@ -18,6 +18,9 @@
 #include <asm/mach/map.h>
 #include <asm/uaccess.h>
 #include <asm/io.h>
+#include <linux/wait.h>
+#include <linux/poll.h>
+
 
 #define IMX6UIRQ_CNT 1
 #define IMX6UIRQ_NAME "imx6uirq"
@@ -50,12 +53,14 @@ struct imx6uirq_dev
 
     atomic_t keyvalue;
     atomic_t releasekey;
-    struct work_struct work;
+
+    wait_queue_head_t r_wait; // 读等待队列头
 };
 struct imx6uirq_dev imx6uirqdev;
 
 static int imx6uirq_open(struct inode *inode, struct file *file)
 {
+
     file->private_data = &imx6uirqdev;
     return 0;
 }
@@ -65,6 +70,45 @@ static ssize_t imx6uirq_read(struct file *file, char __user *buf, size_t cnt, lo
     unsigned char keyvalue;
     unsigned char releasekey;
     struct imx6uirq_dev *dev = file->private_data;
+
+    if (file->f_flags & O_NONBLOCK) // 非阻塞模式
+    {                                          
+        if (atomic_read(&dev->releasekey) == 0) // 没有按下按键
+        {
+            return -EAGAIN;
+        }
+    }
+    else
+    {                                            // 阻塞模式
+        /* 等待事件 ,若第二个参数不为真,则一直阻塞,不执行后面的代码,为真则唤醒*/
+        wait_event_interruptible(dev->r_wait, atomic_read(&dev->releasekey)); // 等待按键值有效
+    }
+
+#if 0
+    /* 等待事件 ,若第二个参数不为真,则一直阻塞,不执行后面的代码,为真则唤醒*/
+    wait_event_interruptible(dev->r_wait,atomic_read(&dev->releasekey));      //等待按键值有效
+#endif
+#if 0
+    DECLARE_WAITQUEUE(wait, current);       //定义一个等待队列项
+    if (atomic_read(&dev->releasekey) == 0)     //按键没有按下
+    {
+        add_wait_queue(&dev->r_wait, &wait);        //将队列项添加到等待队列头
+        __set_current_state(TASK_INTERRUPTIBLE);    //设置进程状态为可打断状态
+        schedule();                             //切换;
+
+
+        /* 唤醒之后从这里开始运行 */
+        if (signal_pending(current))
+        {
+            ret = -ERESTARTSYS;
+            goto data_error;
+        }
+        __set_current_state(TASK_RUNNING);      // 将当前进程状态设置为运行状态
+        remove_wait_queue(&dev->r_wait, &wait); // 将对应的队列项从等待队列头中删除
+    }
+
+#endif
+
     keyvalue = atomic_read(&dev->keyvalue);
     releasekey = atomic_read(&dev->releasekey);
     if (releasekey)
@@ -87,22 +131,41 @@ static ssize_t imx6uirq_read(struct file *file, char __user *buf, size_t cnt, lo
     {
         goto data_error;
     }
-    return ret;
 data_error:
-    return -EINVAL;
+#if 0
+    __set_current_state(TASK_RUNNING);      // 将当前进程状态设置为运行状态
+    remove_wait_queue(&dev->r_wait, &wait); // 将对应的队列项从等待队列头中删除
+#endif
+    return ret;
 }
 
 static int imx6uirq_release(struct inode *inode, struct file *file)
 {
     return 0;
 }
+static unsigned int imx6uirq_poll(struct file * file, struct poll_table_struct * wait)
+{
+    int mask = 0;
+
+    struct imx6uirq_dev *dev = (struct imx6uirq_dev *)file->private_data;
+    poll_wait(file, &dev->r_wait, wait);
+    /* 判断是否可读 */
+    if (atomic_read(&dev->releasekey))     //按键按下可读
+    {
+        mask = POLL_IN | POLLRDNORM;                //返回POLLIN   可读
+    }
+    
+    return mask;
+}
 /*操作类*/
 static const struct file_operations imx6uirq_fops = {
     .owner = THIS_MODULE,
     .open = imx6uirq_open,
     .read = imx6uirq_read,
-    .release = imx6uirq_release};
-/*定时器处理函数*/
+    .release = imx6uirq_release,
+    .poll = imx6uirq_poll,
+};
+
 /**
  * timer_fun - 定时器中断服务例程
  * @arg: 传递给定时器例程的参数，这里预期是一个设备结构体的地址
@@ -135,6 +198,11 @@ static void timer_fun(unsigned long arg)
         // printk("value = %#x \r\n",dev->irqkey[0].value);
         atomic_set(&dev->releasekey, 1); /* 完成的按键过程 */
     }
+    /* 唤醒等待的进程 */
+    if (atomic_read(&dev->releasekey))
+    {
+        wake_up(&dev->r_wait);
+    }
 }
 
 /*按键中断处理函数*/
@@ -142,40 +210,18 @@ static irqreturn_t key0_handler(int irq, void *dev_id)
 {
 
     struct imx6uirq_dev *dev = dev_id;
-
-    // tasklet_schedule(&dev->irqkey[0].tasklet);
-    schedule_work(&dev->work);
+    printk("key0_handler is runing\r\n");
+    tasklet_schedule(&dev->irqkey[0].tasklet);
     return IRQ_HANDLED;
 }
-static void key_tasklet_handler(unsigned long data)
+static void key_tasklet(unsigned long data)
 {
     struct imx6uirq_dev *dev = (struct imx6uirq_dev *)data;
-    printk("key0_tasklet_handler\n");
+    printk("key_tasklet is runing\r\n");
     dev->timer.data = data;
     mod_timer(&dev->timer, jiffies + msecs_to_jiffies(10)); /*10ms定时*/
 }
-/**
- * key_work_handler - 延迟处理按键工作中断请求的函数
- * @work: 工作队列项的指针，用于调度延时处理任务
- * 
- * 此函数被工作队列调度执行，主要用于处理按键中断请求。
- * 它通过获取设备结构体的指针来安排一个定时器，该定时器将在未来触发，
- * 以此来实现按键去抖动的功能，确保按键状态稳定后再进行处理。
- */
-static void key_work_handler(struct work_struct *work)
-{
-    // 打印工作处理函数运行信息
-    printk("key_work_handler is runing \r\n");
-    
-    // 通过work反向获取包含它的设备结构体指针,三个参数分别是指针,类型,成员名
-    struct imx6uirq_dev *dev = container_of(work, struct imx6uirq_dev, work);
-    
-    // 设置定时器的数据为设备结构体的首地址，用于定时器回调函数获取设备信息
-    dev->timer.data = (unsigned long)dev; // timer.data 为imx6ulirq这个结构体变量的首地址
-    
-    // 修改定时器的到期时间，使其在当前时间点之后的10ms触发
-    mod_timer(&dev->timer, jiffies + msecs_to_jiffies(10)); /*10ms定时*/
-}
+
 /*按键初始化*/
 static int keyio_init(struct imx6uirq_dev *dev)
 {
@@ -198,15 +244,16 @@ static int keyio_init(struct imx6uirq_dev *dev)
         sprintf(dev->irqkey[i].name, "KEY%d", i);
         gpio_request(dev->irqkey[i].gpio, dev->irqkey[i].name);
         gpio_direction_input(dev->irqkey[i].gpio);
-#if 0
-        dev->irqkey[i].irqnum = gpio_to_irq(dev->irqkey[i].gpio);       /*获取中断号*/;
-#endif
 
+        dev->irqkey[i].irqnum = gpio_to_irq(dev->irqkey[i].gpio); /*获取中断号*/
+#if 0
         dev->irqkey[i].irqnum = irq_of_parse_and_map(dev->node, i);
+#endif
     }
     /*2、按键中断初始化*/
     dev->irqkey[0].handler = key0_handler;
     dev->irqkey[0].value = KEY0VALUE;
+    // dev->irqkey[0].tasklet = key_tasklet;
     for (i = 0; i < KEY_NUM; ++i)
     {
         ret = request_irq(dev->irqkey[i].irqnum, dev->irqkey[i].handler, IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING,
@@ -216,10 +263,9 @@ static int keyio_init(struct imx6uirq_dev *dev)
             printk("irq %d request fail...\r\n", dev->irqkey[i].irqnum);
             goto fail_requset;
         }
-
-        // tasklet_init(&dev->irqkey[i].tasklet, key_tasklet_handler, (unsigned long)dev);
+        tasklet_init(&dev->irqkey[i].tasklet, key_tasklet, (unsigned long)dev);
     }
-    INIT_WORK(&dev->work, key_work_handler);
+
     /*3、初始化定时器*/
     init_timer(&dev->timer);
     dev->timer.function = timer_fun;
@@ -274,6 +320,7 @@ static int __init imx6uirq_init(void)
         goto fail_device;
     }
     /*初始化keyIO*/
+
     ret = keyio_init(&imx6uirqdev);
     if (ret < 0)
     {
@@ -282,6 +329,9 @@ static int __init imx6uirq_init(void)
     /*初始化原子变量*/
     atomic_set(&imx6uirqdev.keyvalue, INVAKEY);
     atomic_set(&imx6uirqdev.releasekey, 0);
+
+    /* 初始化等待队列头 */
+    init_waitqueue_head(&imx6uirqdev.r_wait);
     return 0;
 fail_keyinit:
 fail_device:
