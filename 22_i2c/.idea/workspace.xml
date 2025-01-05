@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="22_i2c" targetName="all" />
+      <config projectName="22_i2c" targetName="kernel_modules" />
+      <config projectName="22_i2c" targetName="build" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a8e90e1b-831c-4a0c-800c-195794c5867e" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/ap3216c.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ap3216cAPP.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ap3216creg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../10_semaphore/semaphoreAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../10_semaphore/semaphoreAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../11_key/keyAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../11_key/keyAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../13_timer/keyAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../13_timer/keyAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../13_timer/timer.c" beforeDir="false" afterPath="$PROJECT_DIR$/../13_timer/timer.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../13_timer/timerAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../13_timer/timerAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../14_IMX6UIRQ/imx6uirqAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../14_IMX6UIRQ/imx6uirqAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../14_IMX6UIRQ/work.c" beforeDir="false" afterPath="$PROJECT_DIR$/../14_IMX6UIRQ/work.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../15_blockio/imx6uirqAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../15_blockio/imx6uirqAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../16_noblockio/imx6uirqAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../16_noblockio/imx6uirqAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1_chrdevbase/chrdevbaseAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../1_chrdevbase/chrdevbaseAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../2_led/ledAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../2_led/ledAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/.newchrled.mod.o.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/.newchrled.mod.o.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/.newchrled.o.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/.newchrled.o.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/ledAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/ledAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/newchrled" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/newchrled" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/newchrled.ko" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/newchrled.ko" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/newchrled.mod.c" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/newchrled.mod.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/newchrled.mod.o" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/newchrled.mod.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3_newchrled/newchrled.o" beforeDir="false" afterPath="$PROJECT_DIR$/../3_newchrled/newchrled.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../8_atomic/atomicAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../8_atomic/atomicAPP" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../9_spinlock/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/../9_spinlock/a.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../9_spinlock/spinlockAPP" beforeDir="false" afterPath="$PROJECT_DIR$/../9_spinlock/spinlockAPP" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="Make.Settings">
+    <option name="path" value="make" />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="22_i2c" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="22_i2c" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="3.6" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2r4ut4KiX3bjBsHb56jmDB2ursW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Makefile 目标.Makefile.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/wxy/linux/IMX6ULL/Linux_Drivers/23_spi",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.make",
+    "vue.rearranger.settings.migration": "true",
+    "原生应用程序.all.executor": "Run"
+  }
+}]]></component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Space Code Reviews" show_stripe_button="false" />
+      <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
+      <window_info id="Merge Requests" show_stripe_button="false" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info id="Pull Requests" show_stripe_button="false" />
+      <window_info id="Learn" show_stripe_button="false" />
+      <window_info id="DFA" show_stripe_button="false" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17714843" />
+      <window_info id="Commit" order="1" weight="0.25" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" weight="0.37033045" />
+      <window_info anchor="bottom" id="Python Packages" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" weight="0.37033045" />
+      <window_info anchor="bottom" id="File Transfer" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" weight="0.37033045" />
+      <window_info anchor="bottom" id="Vcpkg" show_stripe_button="false" />
+      <window_info anchor="bottom" id="clangd" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.37033045" />
+      <window_info anchor="bottom" id="Services" order="4" />
+      <window_info anchor="bottom" id="CMake" order="5" weight="0.1" />
+      <window_info anchor="right" id="Remote Host" show_stripe_button="false" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+      <window_info anchor="right" id="make" order="4" show_stripe_button="false" side_tool="true" />
+    </layout>
+  </component>
+  <component name="RunManager" selected="Makefile 目标.Makefile">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="22_i2c" TARGET_NAME="all" CONFIG_NAME="all" version="1" RUN_PATH="$PROJECT_DIR$/Makefile">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="build" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="22_i2c" TARGET_NAME="build" CONFIG_NAME="build" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="kernel_modules" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="22_i2c" TARGET_NAME="kernel_modules" CONFIG_NAME="kernel_modules" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Makefile" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Makefile 目标.Makefile" />
+      <item itemvalue="原生应用程序.all" />
+      <item itemvalue="原生应用程序.build" />
+      <item itemvalue="原生应用程序.kernel_modules" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile 目标.Makefile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="a8e90e1b-831c-4a0c-800c-195794c5867e" name="更改" comment="" />
+      <created>1735830881157</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1735830881157</updated>
+      <workItem from="1735830883697" duration="1886000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

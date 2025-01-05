@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "fcntl.h": "c",
+        "semaphore.h": "c",
+        "timer.h": "c",
+        "uaccess.h": "c"
+    }
+}

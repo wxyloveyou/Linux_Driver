@@ -1,0 +1,1 @@
+cmd_/home/wxy/linux/IMX6ULL/Linux_Drivers/22_i2c/ap3216c.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/wxy/linux/IMX6ULL/Linux_Drivers/22_i2c/ap3216c.ko /home/wxy/linux/IMX6ULL/Linux_Drivers/22_i2c/ap3216c.o /home/wxy/linux/IMX6ULL/Linux_Drivers/22_i2c/ap3216c.mod.o

@@ -1,0 +1,1 @@
+cmd_/home/wxy/linux/IMX6ULL/Linux_Drivers/19_dtsplatform/leddriver.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/wxy/linux/IMX6ULL/Linux_Drivers/19_dtsplatform/leddriver.ko /home/wxy/linux/IMX6ULL/Linux_Drivers/19_dtsplatform/leddriver.o /home/wxy/linux/IMX6ULL/Linux_Drivers/19_dtsplatform/leddriver.mod.o
