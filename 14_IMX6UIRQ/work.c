@@ -140,9 +140,7 @@ static void timer_fun(unsigned long arg)
 /*按键中断处理函数*/
 static irqreturn_t key0_handler(int irq, void *dev_id)
 {
-
     struct imx6uirq_dev *dev = dev_id;
-
     // tasklet_schedule(&dev->irqkey[0].tasklet);
     schedule_work(&dev->work);
     return IRQ_HANDLED;

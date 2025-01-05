@@ -152,7 +152,8 @@ static int __init tiemr_init(void)
         goto fail_class;
     }
     //5、创建设备
-    timerdev.device = device_create(timerdev.class, NULL, timerdev.devid, NULL, TIMER_NAME);
+    timerdev.device = device_create(timerdev.class, 
+            NULL, timerdev.devid, NULL, TIMER_NAME);
     if (IS_ERR(timerdev.device)) {
         ret = PTR_ERR(timerdev.device);
         goto fail_device;
